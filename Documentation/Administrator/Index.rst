@@ -21,8 +21,46 @@ To install the extension, perform the following steps:
 
 .. _admin-configuration:
 
-Configuration
--------------
+Relevant TYPO3_CONF_VARS
+------------------------
 
-* overwrite default constants and default setup with your own values.
+GFX/processor_allowUpscaling
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+If set to false, then images are not upscaled. I.e. if one or more srcset candidates width is bigger than the original
+images width, then one last image candidate is created with the original images width.
 
+On the other hand, if this setting is true, then images will be upscaled to match the widths of all given srcset
+candidates.
+
+Respecting this setting was introduced with c1_adaptive_images version 0.1.5
+
+Include third-party JavaScript (if needed)
+------------------------------------------
+
+This extension does currently not include third party JavaScript which is needed for advanced image modes and the
+integrator/administrator has to add them to the website.
+
+lazysizes
+^^^^^^^^^
+This script is needed to render images using lazyloading and setting the sizes attribute automatically.
+Download it at https://github.com/aFarkas/lazysizes
+
+The script should be included early, e.g.:
+
+.. code-block:: none
+
+    page.includeJSFooterlibs = EXT:yourtheme/Resources/Public/Js/lazysizes.min.js
+
+picturefill
+^^^^^^^^^^^
+A polyfill to support the *picture* tag in older browsers, most notably IE11 and Opera Mini.
+Download it at https://scottjehl.github.io/picturefill/
+
+This script should be included early in the head of the website:
+
+.. code-block:: none
+
+    page.picturefill = EXT:yourtheme/Resources/Public/Js/picturefill.min.js
+
+**Hint:** As a simpler alternative one could also use https://github.com/aFarkas/lazysizes/tree/gh-pages/plugins/respimg as a
+picture polyfill.
